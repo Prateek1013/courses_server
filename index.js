@@ -35,6 +35,25 @@ app.post("/course", async (req, res) => {
   res.sendStatus(200);
 });
 
+app.patch("/course/:id", async (req, res) => {
+  let id = req.params.id;
+  let body = req.body;
+  const course = await Course.findByIdAndUpdate(id, body, { new: true });
+  if (!course) {
+    return res.sendStatus(404);
+  }
+  res.status(200).send(course);
+});
+
+app.delete("/course/:id", async (req, res) => {
+  let id = req.params.id;
+  const course = await Course.findByIdAndDelete(id);
+  if (!course) {
+    return res.sendStatus(404);
+  }
+  res.status(200).send(course);
+});
+
 app.listen(PORT, () => {
   console.log(`server is running on ${PORT}`);
 });

@@ -54,6 +54,18 @@ app.delete("/course/:id", async (req, res) => {
   res.status(200).send(course);
 });
 
+app.get("/courses/filter-by-authors", async (req, res) => {
+  let authors = req.body.authors;
+  let arr = [];
+  dat.forEach((course) => {
+    if (authors.includes(course.author)) {
+      arr.push(course);
+    }
+  });
+  if (arr.length == 0) return res.status(200).send([]);
+  res.status(200).send(arr);
+});
+
 app.listen(PORT, () => {
   console.log(`server is running on ${PORT}`);
 });

@@ -28,6 +28,14 @@ app.get("/courses", async (req, res) => {
   res.json(dat);
 });
 
+app.get("/course/:id", async (req, res) => {
+  let resp = await Course.findById(req.params.id);
+  if (!resp) {
+    return res.sendStatus(404);
+  }
+  res.status(200).send(resp);
+});
+
 app.post("/course", async (req, res) => {
   let body = req.body;
   const x = await Course.create(body);
